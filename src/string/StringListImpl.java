@@ -1,6 +1,8 @@
-import java.lang.reflect.Array;
+package string;
+
+import string.StringList;
+
 import java.util.Arrays;
-import java.util.Objects;
 
 public class StringListImpl implements StringList {
     private int size = 0;
