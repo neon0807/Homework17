@@ -1,28 +1,37 @@
-import java.lang.reflect.Array;
+package string;
+
+import string.StringList;
+
 import java.util.Arrays;
-import java.util.Objects;
 
 public class StringListImpl implements StringList {
-    private int size = 10;
+    private int size = 0;
+    private int length = 10;
 
-    private String[] stringArrayList = new String[size];
+    private String[] stringArrayList = new String[length];
 
 
 
+    private void growArray(){
+        String[] newArray = new String[length +10];
+        newArray = Arrays.copyOf(stringArrayList, length +10);
+        stringArrayList = newArray;
+    }
 
     @Override
     public String add(String item) {
-        for (int i = 0; i < stringArrayList.length; i++) {
-            if (stringArrayList[i] == null) {
-                stringArrayList[i] = item;
-                return stringArrayList[i];
-            }
+        if (stringArrayList.length == size){
+            growArray();
         }
+        stringArrayList[size++] = item;
         return null;
     }
 
     @Override
     public String add(int index, String item) {
+        if (length == size){
+            growArray();
+        }
         for (int i = 0; i < stringArrayList.length; i++) {
             if (i == index) {
                 stringArrayList[i] = item;
