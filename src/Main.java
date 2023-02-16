@@ -6,6 +6,16 @@ public class Main {
         a.add("aaaa");
         a.add("aaaa");
         a.add("aaaa");
+        a.add("aaaa");
+        a.add("aaaa");
+        a.add("aaaa");
+        a.add("aaaa");
+        a.add("aaaa");
+        a.add("aaaa");
+        a.add("aaaa");
+        a.add("aaaa");
+        a.add("aaaa");
+        a.add("aaaa");
         a.set(3, "bbb");
         System.out.println(a);
     }
