@@ -1,53 +1,63 @@
-import java.lang.reflect.Array;
+package string;
+
+import string.StringList;
+
 import java.util.Arrays;
-import java.util.Objects;
 
 public class StringListImpl implements StringList {
-    private int size = 10;
+    private int size = 0;
+    private final int DEFAULT_CAPACITY = 10;
+    private int length = DEFAULT_CAPACITY;
 
-    private String[] stringArrayList = new String[size];
+    private String[] stringArrayList;
+
+    public StringListImpl(){
+        this.stringArrayList = new String[DEFAULT_CAPACITY];
+    }
 
 
 
+    private void growArray(){
+        String[] newArray = new String[DEFAULT_CAPACITY * 3 / 2];
+        newArray = Arrays.copyOf(stringArrayList, DEFAULT_CAPACITY *3 / 2);
+        stringArrayList = newArray;
+    }
 
     @Override
     public String add(String item) {
-        for (int i = 0; i < stringArrayList.length; i++) {
-            if (stringArrayList[i] == null) {
-                stringArrayList[i] = item;
-                return stringArrayList[i];
-            }
+        if (stringArrayList.length == size){
+            growArray();
         }
+        stringArrayList[size++] = item;
         return null;
     }
 
     @Override
     public String add(int index, String item) {
-        for (int i = 0; i < stringArrayList.length; i++) {
-            if (i == index) {
-                stringArrayList[i] = item;
-                return stringArrayList[i];
-            }
+        if (length == size){
+            growArray();
         }
+        System.arraycopy(stringArrayList, index, stringArrayList, index + 1, size - index);
+        stringArrayList[index] = item;
+        size++;
         return null;
     }
 
     @Override
     public String set(int index, String item) {
-        for (int i = 0; i < stringArrayList.length; i++) {
-            if (i == index) {
-                stringArrayList[i] = item;
-                return stringArrayList[i];
-            }
+        if (index == index) {
+            stringArrayList[index] = item;
+            return stringArrayList[index];
         }
-        return null;
+        return item;
     }
 
     @Override
     public String remove(String item) {
         for (int i = 0; i < stringArrayList.length; i++) {
             if (stringArrayList[i].equals(item)) {
-                stringArrayList[i] = null;
+                System.arraycopy(stringArrayList,i, stringArrayList, i -1, size - i + 1);
+                size--;
                 return stringArrayList[i];
             }
         }
@@ -56,13 +66,9 @@ public class StringListImpl implements StringList {
 
     @Override
     public String remove(int index) {
-        for (int i = 0; i < stringArrayList.length; i++) {
-            if (i == index) {
-                stringArrayList[i] = null;
-                return stringArrayList[i];
-            }
-        }
-        return null;
+        System.arraycopy(stringArrayList,index, stringArrayList, index -1, size - index + 1);
+        size--;
+        return stringArrayList[index];
     }
 
     @Override
