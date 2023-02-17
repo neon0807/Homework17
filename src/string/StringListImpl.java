@@ -29,7 +29,7 @@ public class StringListImpl implements StringList {
             growArray();
         }
         stringArrayList[size++] = item;
-        return null;
+        return item;
     }
 
     @Override
@@ -40,7 +40,7 @@ public class StringListImpl implements StringList {
         System.arraycopy(stringArrayList, index, stringArrayList, index + 1, size - index);
         stringArrayList[index] = item;
         size++;
-        return null;
+        return item;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class StringListImpl implements StringList {
                 return stringArrayList[i];
             }
         }
-        return null;
+        return item;
     }
 
     @Override

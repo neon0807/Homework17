@@ -4,75 +4,88 @@ import java.util.Arrays;
 
 public class IntegerListImpl implements IntegerList{
     private int size = 0;
-    private int length = 10;
-    private Integer[] integerArrayList = new Integer[length];
+    private final int DEFAULT_CAPACITY = 10;
+    private int length = DEFAULT_CAPACITY;
+
+    private Integer[] integerArrayList;
+
+    public IntegerListImpl(){
+        this.integerArrayList = new Integer[DEFAULT_CAPACITY];
+    }
 
 
 
     private void growArray(){
-        Integer[] newArray = new Integer[length +10];
-        newArray = Arrays.copyOf(integerArrayList, length +10);
+        Integer[] newArray = new Integer[DEFAULT_CAPACITY * 3 / 2];
+        newArray = Arrays.copyOf(integerArrayList, DEFAULT_CAPACITY * 3 / 2);
         integerArrayList = newArray;
     }
 
 
     @Override
     public Integer add(Integer item) {
-        return null;
-    }
-
-    @Override
-    public Integer add(int index, Integer item) {
         if (integerArrayList.length == size){
             growArray();
         }
-        for (int i = 0; i < integerArrayList.length; i++) {
-            if (i == index) {
-                integerArrayList[i] = item;
-                return integerArrayList[i];
-            }
+        integerArrayList[size++] = item;
+        return item;
+    }
+
+    @Override
+    public Integer add (int index, Integer item) {
+        if (length == size){
+            growArray();
         }
-        return null;
+        System.arraycopy(integerArrayList, index, integerArrayList, index + 1, size - index);
+        integerArrayList[index] = item;
+        size++;
+        return item;
     }
 
     @Override
     public Integer set(int index, Integer item) {
-        for (int i = 0; i < integerArrayList.length; i++) {
-            if (i == index) {
-                integerArrayList[i] = item;
-                return integerArrayList[i];
-            }
+        if (index == index) {
+            integerArrayList[index] = item;
+            return integerArrayList[index];
         }
-        return null;
+        return item;
     }
 
     @Override
     public Integer remove(Integer item) {
         for (int i = 0; i < integerArrayList.length; i++) {
             if (integerArrayList[i].equals(item)) {
-                integerArrayList[i] = null;
+                System.arraycopy(integerArrayList,i, integerArrayList, i -1, size - i + 1);
+                size--;
                 return integerArrayList[i];
             }
         }
-        return null;
+        return item;
     }
 
     @Override
     public Integer remove(int index) {
-        for (int i = 0; i < integerArrayList.length; i++) {
-            if (i == index) {
-                integerArrayList[i] = null;
-                return integerArrayList[i];
-            }
-        }
-        return null;
+        System.arraycopy(integerArrayList,index, integerArrayList, index -1, size - index + 1);
+        size--;
+        return integerArrayList[index];
     }
 
     @Override
     public boolean contains(Integer item) {
-        for (int i = 0; i < integerArrayList.length; i++) {
-            if (integerArrayList[i] == (item)) {
+
+        sort(integerArrayList);
+
+        int min = 0;
+        int max = integerArrayList.length - 1;
+        while (min <= max) {
+            int mid = (min + max) / 2;
+            if (item == integerArrayList[mid]) {
                 return true;
+            }
+            if (item < integerArrayList[mid]) {
+                max = mid - 1;
+            } else {
+                min = mid + 1;
             }
         }
         return false;
