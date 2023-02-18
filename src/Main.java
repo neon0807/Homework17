@@ -1,4 +1,5 @@
 import string.StringListImpl;
+import integer.IntegerListImpl;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -14,6 +15,11 @@ public class Main {
         for (int i = 0; i < array.length; i++) {
             array[i] = random.nextInt(100);
         }
+
+
+
+
+
         int[] array1 = Arrays.copyOf(array,n);
         int[] array2 = Arrays.copyOf(array,n);
 
